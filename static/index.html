@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>NODE.js</title>
+</head>
+<body>
+<form id="form-user" action="/api/contacts" method="POST" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="name" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" id="name-user">
+    <br>
+    <input type="text" name="phone" placeholder="НОМЕР ТЕЛЕФОНА" autocomplete="off" id="phone-user">
+    <button type="submit" id="button-user-create">Создать</button>
+</form>
+
+<hr>
+
+<form action="/api/contacts/foto" method="POST" enctype="multipart/form-data">
+    <input type="text" name="fotodescription" placeholder="ОПИСАНИЕ КАРТИНКИ">
+    <br>
+    <input type="file" name="foto">
+    <button type="submit">ЗАГРУЗИТЬ ФОТО</button>
+</form>
+</body>
+<script>
+    const userCreateURL = '/api/contacts';
+    const button = document.querySelector('#button-user-create');
+    const name = document.querySelector('#name-user');
+    const phone = document.querySelector('#phone-user');
+    button.addEventListener('submit', (e) => {
+        try {
+            e.preventDefault();
+            fetch(userCreateURL, {
+                method: 'POST',
+                body: `?user=${name.value}&phone=${phone.value}`
+            })
+                .then(result => {
+                    console.log(result);
+                })
+        } catch (err) {
+            console.log(err);
+        }
+    })
+</script>
+</html>
